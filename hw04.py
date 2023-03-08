@@ -126,7 +126,7 @@ def balanced(m):
     >>> check(HW_SOURCE_FILE, 'balanced', ['Index'])
     True
     """
-    #(mobile(arm(1,
+    #(mobiel(arm(1,
     if is_planet(m):
         return True
     if length(left(m)) * total_weight(end(left(m))) != length(right(m)) * total_weight(end(right(m))):
@@ -164,7 +164,11 @@ def totals_tree(m):
     >>> check(HW_SOURCE_FILE, 'totals_tree', ['Index'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_planet(m):
+        return tree(total_weight(m))
+    return tree(total_weight(end(left(m))) + total_weight(end(right(m))), [ totals_tree((end(left(m)))), totals_tree((end(right(m)))) ])
+        # return tree(total_weight(end(left(m))) + total_weight(end(right(m))), [(tree(totals_tree(end(left(m))))), tree(totals_tree(end(right(m))))])
+    
 
 
 def replace_loki_at_leaf(t, lokis_replacement):
@@ -196,8 +200,13 @@ def replace_loki_at_leaf(t, lokis_replacement):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    if is_leaf(t):
+        if label(t) == "loki":
+            return tree(lokis_replacement)
+        else:
+            return tree(label(t))
+    #
+    return tree(label(t),[ replace_loki_at_leaf(branch,lokis_replacement) for branch in branches(t)])
 
 def has_path(t, word):
     """Return whether there is a path in a tree where the entries along the path
